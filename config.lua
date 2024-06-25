@@ -29,6 +29,12 @@ lvim.plugins = {
       },
     },
   },
+  {
+    "nvim-lua/plenary.nvim"
+  },
+  {
+    "nvim-pack/nvim-spectre"
+  },
 }
 
 require("telescope").load_extension("live_grep_args")
@@ -50,7 +56,33 @@ lvim.builtin.which_key.mappings["t"] = {
   h = { "<cmd>2ToggleTerm size=30 direction=horizontal<cr>", "Split horizontal" },
 }
 
+lvim.builtin.which_key.mappings["r"] = {
+  name = "Find And Replace (Spectre)",
+  t = { '<cmd>lua require("spectre").toggle()<CR>', "Toggle Spectre" },
+}
+
 lvim.builtin.which_key.mappings.s.t = {
   require('telescope').extensions.live_grep_args.live_grep_args, "Live grep args",
 }
 
+
+local function clear_cmdarea()
+  vim.defer_fn(function()
+    vim.api.nvim_echo({}, false, {})
+  end, 1500)
+end
+
+vim.api.nvim_create_autocmd({ "InsertLeave", "TextChanged" }, {
+  callback = function()
+    if #vim.api.nvim_buf_get_name(0) ~= 0 and vim.bo.buflisted then
+      vim.cmd "silent w"
+
+      local time = os.date "%I:%M %p"
+
+      -- print nice colored msg
+      vim.api.nvim_echo({ { "󰄳", "LazyProgressDone" }, { " file autosaved at " .. time } }, false, {})
+
+      clear_cmdarea()
+    end
+  end,
+})
