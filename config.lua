@@ -35,9 +35,48 @@ lvim.plugins = {
   {
     "nvim-pack/nvim-spectre"
   },
+  {
+    "folke/trouble.nvim",
+    opts = {}, -- for default options, refer to the configuration section for custom setup.
+    cmd = "Trouble",
+    keys = {
+      {
+        "<leader>xx",
+        "<cmd>Trouble diagnostics toggle<cr>",
+        desc = "Diagnostics (Trouble)",
+      },
+      {
+        "<leader>xX",
+        "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
+        desc = "Buffer Diagnostics (Trouble)",
+      },
+      {
+        "<leader>xs",
+        "<cmd>Trouble symbols toggle focus=false<cr>",
+        desc = "Symbols (Trouble)",
+      },
+      {
+        "<leader>xl",
+        "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
+        desc = "LSP Definitions / references / ... (Trouble)",
+      },
+      {
+        "<leader>xL",
+        "<cmd>Trouble loclist toggle<cr>",
+        desc = "Location List (Trouble)",
+      },
+      {
+        "<leader>xQ",
+        "<cmd>Trouble qflist toggle<cr>",
+        desc = "Quickfix List (Trouble)",
+      },
+    },
+  },
 }
 
 require("telescope").load_extension("live_grep_args")
+
+require("lvim.lsp.manager").setup("emmet_ls")
 
 lvim.colorscheme = "bamboo"
 
@@ -63,6 +102,10 @@ lvim.builtin.which_key.mappings["r"] = {
 
 lvim.builtin.which_key.mappings.s.t = {
   require('telescope').extensions.live_grep_args.live_grep_args, "Live grep args",
+}
+
+lvim.builtin.which_key.mappings.s.b = {
+  "<cmd>lua require('telescope.builtin').buffers()<cr>", "buffers"
 }
 
 
