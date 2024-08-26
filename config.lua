@@ -72,6 +72,15 @@ lvim.plugins = {
       },
     },
   },
+  {
+    "ptdewey/yankbank-nvim",
+    dependencies = "kkharji/sqlite.lua",
+    config = function()
+        require('yankbank').setup({
+            persist_type = "sqlite",
+        })
+    end,
+  },
 }
 
 require("telescope").load_extension("live_grep_args")
@@ -91,8 +100,8 @@ lvim.keys.normal_mode["gT"] = ":BufferLineCyclePrev<CR>"
 lvim.builtin.which_key.mappings["t"] = {
   name = "+Terminal",
   f = { "<cmd>ToggleTerm<cr>", "Floating terminal" },
-  v = { "<cmd>2ToggleTerm size=30 direction=vertical<cr>", "Split vertical" },
-  h = { "<cmd>2ToggleTerm size=30 direction=horizontal<cr>", "Split horizontal" },
+  v = { "<cmd>2ToggleTerm size=10 direction=vertical<cr>", "Split vertical" },
+  h = { "<cmd>2ToggleTerm size=10 direction=horizontal<cr>", "Split horizontal" },
 }
 
 lvim.builtin.which_key.mappings["r"] = {
@@ -106,6 +115,10 @@ lvim.builtin.which_key.mappings.s.t = {
 
 lvim.builtin.which_key.mappings.s.b = {
   "<cmd>lua require('telescope.builtin').buffers()<cr>", "buffers"
+}
+
+lvim.builtin.which_key.mappings.y = {
+  "<cmd>YankBank<CR>", "yankbank"
 }
 
 
