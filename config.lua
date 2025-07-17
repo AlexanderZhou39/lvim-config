@@ -81,7 +81,39 @@ lvim.plugins = {
         })
     end,
   },
+  {
+    "ggandor/leap.nvim",
+    config = function()
+      require('leap').create_default_mappings()
+    end,
+  },
+  -- {
+  --   "tris203/precognition.nvim",
+  --   opts = {},
+  -- },
+  {
+    "leath-dub/snipe.nvim",
+    opts={},
+  },
+  -- {
+  --   "lervag/vimtex",
+  --   lazy = true,     -- lazy load VimTeX
+  --   ft = "tex", -- without ft, it's not working
+  --   config = function()
+  --     vim.cmd("syntax enable")
+  --     vim.cmd("call vimtex#init()")
+  --   end,
+  -- }
 }
+
+vim.keymap.set({'n', 'x', 'o'}, 'ga',  function ()
+  require('leap.treesitter').select()
+end)
+
+-- Linewise.
+vim.keymap.set({'n', 'x', 'o'}, 'gA',
+  'V<cmd>lua require("leap.treesitter").select()<cr>'
+)
 
 require("telescope").load_extension("live_grep_args")
 
@@ -97,11 +129,16 @@ vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = open_nvim_tree })
 lvim.keys.normal_mode["gt"] = ":BufferLineCycleNext<CR>"
 lvim.keys.normal_mode["gT"] = ":BufferLineCyclePrev<CR>"
 
+
 lvim.builtin.which_key.mappings["t"] = {
   name = "+Terminal",
   f = { "<cmd>ToggleTerm<cr>", "Floating terminal" },
   v = { "<cmd>2ToggleTerm size=10 direction=vertical<cr>", "Split vertical" },
   h = { "<cmd>2ToggleTerm size=10 direction=horizontal<cr>", "Split horizontal" },
+}
+
+lvim.builtin.which_key.mappings["b"] = {
+  s = {'<cmd>lua require("snipe").open_buffer_menu()<CR>', "Open snipe menu"},
 }
 
 lvim.builtin.which_key.mappings["r"] = {
@@ -119,6 +156,10 @@ lvim.builtin.which_key.mappings.s.b = {
 
 lvim.builtin.which_key.mappings.y = {
   "<cmd>YankBank<CR>", "yankbank"
+}
+
+lvim.builtin.which_key.mappings.l.r = {
+  "<cmd>LspRestart<cr>", "restart"
 }
 
 
